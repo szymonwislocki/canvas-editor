@@ -3,4 +3,6 @@ body {
 }
 .container {
   background-color: #fff;
+  margin: auto;
+  width: 50%;
 }
