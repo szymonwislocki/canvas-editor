@@ -3,6 +3,12 @@ body {
 }
 .container {
   background-color: #fff;
-  margin: auto;
-  width: 50%;
+  border: 2px solid black;
+  margin: 0 auto;
+  width: 600px;
+  height: 800px;
+}
+
+input {
+  margin: 0 auto;
 }

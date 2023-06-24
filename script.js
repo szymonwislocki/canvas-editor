@@ -1,28 +1,41 @@
-const stage = new Konva.Stage({
+const uploadedFile = document.getElementById("photo-input");
+
+let stage = new Konva.Stage({
   container: "container", // ID elementu canvas
   width: 600,
   height: 800,
 });
 
-const layer = new Konva.Layer();
+let layer = new Konva.Layer();
 stage.add(layer);
-stage.draw();
+layer.draw();
 
-const uploadedFile = document.getElementById("photo-input");
+uploadedFile.addEventListener("change", function (e) {
+  const URL = window.URL;
+  const url = URL.createObjectURL(e.target.files[0]);
+  const img = new Image();
+  img.src = url;
 
-const uploadedImage = new Image();
-uploadedImage.onload = function () {
-  const image = new Konva.Image({
-    image: imageObj,
-    x: 0,
-    y: 0,
-    width: image.width,
-    height: image.height,
-  });
+  img.onload = function () {
+    let imgWidth = img.width;
+    let imgHeight = img.height;
 
-  layer.add(image); //dodaj obraz do warstwy
+    let theImg = new Image();
+    theImg.src = url;
 
-  stage.add(layer); //dodaj warstwę do sceny
-};
+    const konvaImg = new Konva.Image({
+      image: theImg,
+      width: theImg.width,
+      height: theImg.height,
+      draggable: true,
+      resizeEnabled: true,
+    });
 
-uploadedImage.src = "";
+    //transformer do resize i
+    const transformer = new Konva.Transformer({});
+
+    layer.add(konvaImg);
+    layer.add(transformer);
+    stage.draw;
+  };
+});
