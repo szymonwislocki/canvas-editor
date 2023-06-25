@@ -32,10 +32,22 @@ uploadedFile.addEventListener("change", function (e) {
     });
 
     //transformer do resize i
-    const transformer = new Konva.Transformer({});
+    const transformer = new Konva.Transformer({
+      node: konvaImg,
+      enabledAnchors: [
+        "top-left",
+        "top",
+        "top-right",
+        "bottom",
+        "bottom-left",
+        "bottom-right",
+      ],
+      enabledControls: ["rotation", "scaling"],
+    });
 
     layer.add(konvaImg);
     layer.add(transformer);
-    stage.draw;
+    stage.draw();
+    uploadedFile.value = null;
   };
 });
