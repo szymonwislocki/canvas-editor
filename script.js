@@ -1,4 +1,6 @@
+//import { v4 as uuidv4 } from "uuid";
 const uploadedFile = document.getElementById("photo-input");
+const deleteButton = document.getElementById("delete");
 
 let stage = new Konva.Stage({
   container: "container", // ID elementu canvas
@@ -15,6 +17,7 @@ uploadedFile.addEventListener("change", function (e) {
   const url = URL.createObjectURL(e.target.files[0]);
   const img = new Image();
   img.src = url;
+  //const imgId = uuidv4();
 
   img.onload = function () {
     let imgWidth = img.width;
@@ -29,25 +32,18 @@ uploadedFile.addEventListener("change", function (e) {
       height: theImg.height,
       draggable: true,
       resizeEnabled: true,
+      id: String(url),
     });
 
     //transformer do resize i
-    const transformer = new Konva.Transformer({
-      node: konvaImg,
-      enabledAnchors: [
-        "top-left",
-        "top",
-        "top-right",
-        "bottom",
-        "bottom-left",
-        "bottom-right",
-      ],
-      enabledControls: ["rotation", "scaling"],
-    });
+    const transformer = new Konva.Transformer();
+    layer.add(transformer);
+    transformer.nodes([konvaImg]);
 
     layer.add(konvaImg);
-    layer.add(transformer);
     stage.draw();
+    console.log(konvaImg.attrs.id);
+
     uploadedFile.value = null;
   };
 });
