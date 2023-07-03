@@ -15,49 +15,45 @@ uploadedFile.addEventListener("change", function (e) {
   img.src = url;
 
   img.onload = function () {
-    let imgWidth = img.width;
-    let imgHeight = img.height;
+    // let imgWidth = img.width;
+    // let imgHeight = img.height;
 
     let theImg = new Image();
     theImg.src = url;
 
     const konvaImg = new Konva.Image({
       image: theImg,
-      width: theImg.width - (theImg.width * 1, 1),
+      width: theImg.width - theImg.width * 1.1,
       height: theImg.height,
       draggable: true,
       resizeEnabled: true,
       id: String(url),
     });
 
-    //every Img has its own Layer
+    //every Img has its own Layer - NF
     const layer = new Konva.Layer();
     layer.add(transformer);
-    stage.add(layer);
     layer.add(konvaImg);
+    stage.add(layer);
     layer.draw();
 
     uploadedFile.value = null;
-    //remove all transforms from every image on stage (by forEach)???
-    transformer.nodes([konvaImg]);
-    // konvaImg.on("click", (e) => {
-    //   console.log(e)
-    //   e.parent.draw();
-    // });
+    currentShape = konvaImg;
+    transformer.nodes([currentShape]);
   };
 });
 
 deleteButton.addEventListener("click", () => {
-  console.log(currentShape);
-  if (currentShape !== stage) currentShape.parent.remove();
-  console.log(transformer);
+  if (currentShape !== stage) currentShape.parent.getChildren((node) => node.getClassName() !== "Transformer").forEach((el) => el.remove());
+  transformer.nodes([]);
 });
 
-stage.on("click dragstart", (e) => {
+stage.on("tap click dragstart", (e) => {
   currentShape = e.target;
   if (currentShape === stage) {
     transformer.nodes([]);
   } else {
     transformer.nodes([currentShape]);
   }
+  stage.draw();
 });
