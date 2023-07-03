@@ -1,1 +1,5 @@
-{}
+{
+  "dependencies": {
+    "konva": "^9.2.0"
+  }
+}
