@@ -23,7 +23,7 @@ uploadedFile.addEventListener("change", function (e) {
 
     const konvaImg = new Konva.Image({
       image: theImg,
-      width: theImg.width - theImg.width * 1.1,
+      width: theImg.width,
       height: theImg.height,
       draggable: true,
       resizeEnabled: true,
