@@ -1,11 +1,17 @@
 const uploadedFile = document.getElementById("photo-input");
 const deleteButton = document.getElementById("delete");
+const cropButton = document.getElementById("crop");
+
 let currentShape;
 let transformer = new Konva.Transformer();
+let cropper = new Konva.Transformer({
+  borderStroke: "red",
+  anchorStroke: "red",
+});
 let stage = new Konva.Stage({
   container: "container", // ID elementu canvas
-  width: 600,
-  height: 800,
+  width: 1103.76,
+  height: 774.9325,
 });
 
 uploadedFile.addEventListener("change", function (e) {
@@ -50,10 +56,21 @@ deleteButton.addEventListener("click", () => {
 
 stage.on("tap click dragstart", (e) => {
   currentShape = e.target;
-  if (currentShape === stage) {
-    transformer.nodes([]);
-  } else {
-    transformer.nodes([currentShape]);
+  switch (editMode) {
+    case "scale":
+      if (currentShape === stage) {
+        transformer.nodes([]);
+      } else {
+        transformer.nodes([currentShape]);
+      }
+      break;
+    case "crop":
+      if (currentShape === stage) {
+        cropper.nodes([]);
+      } else {
+        cropper.nodes([currentShape]);
+      }
+      break;
   }
   stage.draw();
 });
